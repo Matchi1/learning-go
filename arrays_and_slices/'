@@ -24,8 +24,6 @@ func SumAllTails(numbers ...[]int) []int {
         if len(number) != 0 {
             tail := number[1:]
             sums = append(sums, Sum(tail))
-        } else {
-            sums = append(sums, 0)
         }
     }
     return sums
