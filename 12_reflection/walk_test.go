@@ -17,18 +17,18 @@ type Profile struct {
 
 func TestWalk(t *testing.T) {
 
-	cases := []struct {
-		Name          string
-		Input         interface{}
-		ExpectedCalls []string
-	}{
-		{
-			"struct with one string field",
-			struct {
-				Name string
-			}{"Chris"},
-			[]string{"Chris"},
-		},
+    cases := []struct {
+        Name          string
+        Input         interface{}
+        ExpectedCalls []string
+    }{
+        {
+            "struct with one string field",
+            struct {
+                Name string
+            }{"Chris"},
+            []string{"Chris"},
+        },
         {
             "struct with two string fields",
             struct {
@@ -77,7 +77,7 @@ func TestWalk(t *testing.T) {
             },
             []string{"London", "Reykjavík"},
         },
-	}
+    }
 
 	for _, test := range cases {
 		t.Run(test.Name, func(t *testing.T) {
@@ -90,5 +90,32 @@ func TestWalk(t *testing.T) {
 				t.Errorf("got %v, want %v", got, test.ExpectedCalls)
 			}
 		})
+	}
+    t.Run("with maps", func(t *testing.T) {
+        aMap := map[string]string{
+            "Foo": "Bar",
+            "Baz": "Boz",
+        }
+
+        var got []string
+        walk(aMap, func(input string) {
+            got = append(got, input)
+        })
+
+        assertContains(t, got, "Bar")
+        assertContains(t, got, "Boz")
+    })
+}
+
+func assertContains(t testing.TB, haystack []string, needle string) {
+	t.Helper()
+	contains := false
+	for _, x := range haystack {
+		if x == needle {
+			contains = true
+		}
+	}
+	if !contains {
+		t.Errorf("expected %+v to contain %q but it didn't", haystack, needle)
 	}
 }
