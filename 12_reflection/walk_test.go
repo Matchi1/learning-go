@@ -79,18 +79,18 @@ func TestWalk(t *testing.T) {
         },
     }
 
-	for _, test := range cases {
-		t.Run(test.Name, func(t *testing.T) {
-			var got []string
-			walk(test.Input, func(input string) {
-				got = append(got, input)
-			})
+    for _, test := range cases {
+        t.Run(test.Name, func(t *testing.T) {
+            var got []string
+            walk(test.Input, func(input string) {
+                got = append(got, input)
+            })
 
-			if !reflect.DeepEqual(got, test.ExpectedCalls) {
-				t.Errorf("got %v, want %v", got, test.ExpectedCalls)
-			}
-		})
-	}
+            if !reflect.DeepEqual(got, test.ExpectedCalls) {
+                t.Errorf("got %v, want %v", got, test.ExpectedCalls)
+            }
+        })
+    }
     t.Run("with maps", func(t *testing.T) {
         aMap := map[string]string{
             "Foo": "Bar",
@@ -104,6 +104,26 @@ func TestWalk(t *testing.T) {
 
         assertContains(t, got, "Bar")
         assertContains(t, got, "Boz")
+    })
+    t.Run("with channels", func(t *testing.T) {
+        aChannel := make(chan Profile)
+
+        go func() {
+            aChannel <- Profile{33, "Berlin"}
+            aChannel <- Profile{34, "Katowice"}
+            close(aChannel)
+        }()
+
+        var got []string
+        want := []string{"Berlin", "Katowice"}
+
+        walk(aChannel, func(input string) {
+            got = append(got, input)
+        })
+
+        if !reflect.DeepEqual(got, want) {
+            t.Errorf("got %v, want %v", got, want)
+        }
     })
 }
 
