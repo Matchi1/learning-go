@@ -4,21 +4,31 @@ import (
     "strings"
 )
 
-func ConvertToRoman(n int) string {
-    var result strings.Builder
+type RomanNumeral struct {
+	Value  int
+	Symbol string
+}
 
-    for n > 0 {
-        switch {
-        case n > 4:
-            result.WriteString("V")
-            n -= 5
-        case n > 3:
-            result.WriteString("IV")
-            n -= 4
-        default:
-            result.WriteString("I")
-            n--
-        }
-    }
-    return result.String()
+var allRomanNumerals = []RomanNumeral{
+	{50, "L"},
+	{40, "XL"},
+	{10, "X"},
+	{9, "IX"},
+	{5, "V"},
+	{4, "IV"},
+	{1, "I"},
+}
+
+func ConvertToRoman(arabic int) string {
+
+	var result strings.Builder
+
+	for _, numeral := range allRomanNumerals {
+		for arabic >= numeral.Value {
+			result.WriteString(numeral.Symbol)
+			arabic -= numeral.Value
+		}
+	}
+
+	return result.String()
 }
