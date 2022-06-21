@@ -7,8 +7,18 @@ import (
 func ConvertToRoman(n int) string {
     var result strings.Builder
 
-    for i := 0; i < n; i++ {
-        result.WriteString("I")
+    for n > 0 {
+        switch {
+        case n > 4:
+            result.WriteString("V")
+            n -= 5
+        case n > 3:
+            result.WriteString("IV")
+            n -= 4
+        default:
+            result.WriteString("I")
+            n--
+        }
     }
     return result.String()
 }
