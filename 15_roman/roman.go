@@ -1,8 +1,14 @@
 package main
 
+import (
+    "strings"
+)
+
 func ConvertToRoman(n int) string {
-    if n == 1 {
-        return "I"
+    var result strings.Builder
+
+    for i := 0; i < n; i++ {
+        result.WriteString("I")
     }
-    return "II"
+    return result.String()
 }
