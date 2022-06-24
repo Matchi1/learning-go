@@ -1,10 +1,10 @@
-package maths
+package clockface_test
 
 import (
 	"testing"
 	"time"
 
-    "github.com/Matchi1/maths/clockface"
+    "github.com/Matchi1/learning-go/maths/v1/clockface"
 )
 
 func TestSecondHandAtMidnight(t *testing.T) {
