@@ -1,4 +1,4 @@
-module v1
+module github.com/Matchi1/learning-go
 
 go 1.18
 
