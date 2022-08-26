@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-    "github.com/Matchi1/learning-go/maths/v1/clockface"
+	"github.com/Matchi1/learning-go/maths/v1/clockface"
 )
 
 func TestSecondHandAtMidnight(t *testing.T) {
